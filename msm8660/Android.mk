@@ -5,7 +5,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_ARM_MODE := arm
-LOCAL_CFLAGS := -D_POSIX_SOURCE
+LOCAL_CFLAGS := -D_POSIX_SOURCE -fno-strict-aliasing
 
 LOCAL_SRC_FILES := \
     AudioHardware.cpp \
@@ -53,6 +53,10 @@ LOCAL_C_INCLUDES += hardware/libhardware/include
 LOCAL_C_INCLUDES += hardware/libhardware_legacy/include
 LOCAL_C_INCLUDES += frameworks/base/include
 LOCAL_C_INCLUDES += system/core/include
+
+ifeq ($(BOARD_HAVE_HTC_AUDIO),true)
+LOCAL_CFLAGS += -DHTC_ACOUSTIC_AUDIO -DLEGACY_QCOM_VOICE
+endif
 
 ifeq ($(BOARD_HAVE_SAMSUNG_AUDIO),true)
 LOCAL_CFLAGS += -DSAMSUNG_AUDIO
